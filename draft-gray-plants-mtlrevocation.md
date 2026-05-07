@@ -65,9 +65,9 @@ This document defines Merkle Tree Ladder Revocation which makes use of a Merkle 
 
 # Introduction
 
-When X.509 Certificate validation is performed, a revocation check operation is needed to ensure that the certificate being validated has not been revoked by its issuing CA.  Where CRL’s are used as the method of revocation, they can grow to be very large (10s of Megabytes), which is inefficient from a bandwidth perspective.   Partitioned CRL’s are better in that they reduce bandwidth, but require multiple signatures.   OCSP is another type of revocation that replaces a list of revocations with an individual OCSP response.  The issue with OCSP is that a signature is required for every response.    OCSP has the ability to enable real-time responses by use of a nonce, but in practice having a freshly signed response for every revocation request becomes too onerous for OCSP responders for very large CA systems.
+When X.509 Certificate validation is performed, a revocation check operation is needed to ensure that the certificate being validated has not been revoked by its issuing CA. Where CRL’s are used as the method of revocation, they can grow to be very large (10s of Megabytes), which is inefficient from a bandwidth perspective. Partitioned CRL’s are better in that they reduce bandwidth, but require multiple signatures. OCSP is another type of revocation that replaces a list of revocations with an individual OCSP response.  The issue with OCSP is that a signature is required for every response. OCSP has the ability to enable real-time responses by use of a nonce, but in practice having a freshly signed response for every revocation request becomes too onerous for OCSP responders for very large CA systems.
 
-This proposal takes a different look at how revocation can be performed using the Merkle Tree Ladder (MTL) approach.   For revocation use-cases each leaf node in the Merkle Tree Ladder represents a signature over a certificate entry.   Efficiency is enabled because only a single signature over the set of ladders is required to validate any response in the MTL structure which can represent all revocation information for a CA.  The computation of each signature is effectivly replaced by a hash, and the MTL root signature can be cached offering minimal download overhead, especially in the context of larger cryptographic signatures schemes.  This can allow orders of magnatude faster compution of pre-computed revocation proofs which can lead to more timely revocation information.
+This proposal takes a different look at how revocation can be performed using the Merkle Tree Ladder (MTL) approach. For revocation use-cases each leaf node in the Merkle Tree Ladder represents a signature over a certificate entry.  Efficiency is enabled because only a single signature over the set of ladders is required to validate any response in the MTL structure which can represent all revocation information for a CA. The computation of each signature is effectivly replaced by a hash, and the MTL root signature can be cached offering minimal download overhead, especially in the context of larger cryptographic signatures schemes.  This can allow orders of magnatude faster compution of pre-computed revocation proofs which can lead to more timely revocation information.
 
 Dividing up work in different ways for optimal environment usage.  Eg.  Sigs turn to hashes, HSM may not need to sign as much.
 
@@ -93,12 +93,12 @@ Online Certificate status protocol, as defined in [RFC6960]
 
 # Revocation Request Structure {#sec-request-structure}
 
-To request revocation information, at minimum information identifying the certificate whose status is being checked is required.  In a PKI system, a certificate can be uniquely identified by the issuer of the certificate along with its unique serial number.  According to \[RFC5280] the serial number MUST be unique for each certificate issued by a given CA   This can be seen in OCSP \[RFC6960] where the information used to identify a certificate in a request is a CertID:
+To request revocation information, at minimum information identifying the certificate whose status is being checked is required.  In a PKI system, a certificate can be uniquely identified by the issuer of the certificate along with its unique serial number.  According to [RFC5280] the serial number MUST be unique for each certificate issued by a given CA   This can be seen in OCSP [RFC6960] where the information used to identify a certificate in a request is a CertID:
 
 ~~~
 Request ::=     SEQUENCE {
   reqCert                    CertID,
-  singleRequestExtensions    \[0] EXPLICIT Extensions OPTIONAL }
+  singleRequestExtensions    [0] EXPLICIT Extensions OPTIONAL }
 
 CertID ::= SEQUENCE {
    hashAlgorithm      AlgorithmIdentifier,
@@ -131,9 +131,8 @@ Note:  Implementations will need to associate the Certificate Identifier informa
 
 ### Validation of a Response
 
-* A certificate extension (for example AIA id-ad-ocsp, or new defined AIA extension) is used to convey how a client using the certificate's revocation information can check the MTL signature
-
-  * TODO probably a new extension will be needed, the client would need to retreive at least the MTL condensed signature, and possibly the ladder signature if it didn't already have it.   Clients can cache the ladder signature for future use, or could periodically poll to download the latest ladder signature.
+* A certificate extension (for example AIA id-ad-ocsp, or new defined AIA extension) is used to convey how a client using the certificate's revocation information can check the MTL signature.  This could be similar to the MTC proposal.
+* TODO probably a new extension will be needed, the client would need to retreive at least the MTL condensed signature, and possibly the ladder signature if it didn't already have it.  Clients can cache the ladder signature for future use, or could periodically poll to download the latest ladder signature.
 * Using a Condensed signature would reduce size increase of comparable OCSP responses.   Even with the occasional update of the MTL ladder signature, sizes would we much smaller than combined CRL's.
 * Client will reconstitute the full MTL signature (authentication path, handle reference value and signature) and verify it.
 
