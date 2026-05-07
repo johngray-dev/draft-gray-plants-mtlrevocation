@@ -5,7 +5,7 @@ category: std
 
 docname: draft-gray-plants-mtlrevocation-latest
 ipr: trust200902
-area: Security
+area: "Security"
 wg: LAMPS
 kw: Internet-Draft
 
@@ -18,12 +18,12 @@ keyword:
  - CRL
 
 venue:
-  group: WG
-  type: Working Group
-  mail: WG@example.com
-  arch: https://example.com/WG
-  github: USER/REPO
-  latest: https://example.com/LATEST
+  group: "PKI, Logs, And Tree Signatures"
+  type: "Working Group"
+  mail: "plants@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/plants"
+  github: "johngray-dev/draft-gray-plants-mtlrevocation"
+  latest: "https://johngray-dev.github.io/draft-gray-plants-mtlrevocation/draft-gray-plants-mtlrevocation.html"
 
 author:
 -
@@ -46,7 +46,7 @@ author:
     country: United States of America
     code: 20190
     email: jsharvey@verisign.com
- 
+
 
 normative:
   RFC2119:
