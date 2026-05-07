@@ -18,12 +18,12 @@ keyword:
  - CRL
 
 venue:
-group: WG
-type: Working Group
-mail: WG@example.com
-arch: https://example.com/WG
-github: USER/REPO
-latest: https://example.com/LATEST
+  group: WG
+  type: Working Group
+  mail: WG@example.com
+  arch: https://example.com/WG
+  github: USER/REPO
+  latest: https://example.com/LATEST
 
 author:
 -
@@ -49,15 +49,13 @@ author:
  
 
 normative:
-RFC2119:
-RFC5280:
-RFC6960:
-RFC8174:
+  RFC2119:
+  RFC5280:
+  RFC6960:
+  RFC8174:
 
 informative:
-I-D.draft-harvey-cfrg-mtl-mode-02
-
-
+  I-D.draft-harvey-cfrg-mtl-mode-02:
 
 --- abstract
 
@@ -80,18 +78,17 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 The following terms are used in this document:
 
 PKI:
-Public Key Infrastructure, as defined in \[RFC5280].
+Public Key Infrastructure, as defined in [RFC5280].
 
 SIGNATURE:
 A digital cryptographic signature, making no assumptions
 about which algorithm.
 
 CRL:
-A Certificate Revocation List, as defined in \[RFC5280]
+A Certificate Revocation List, as defined in [RFC5280]
 
 OCSP:
-Online Certificate status protocol, as defined in \[RFC6960]
-
+Online Certificate status protocol, as defined in [RFC6960]
 
 
 # Revocation Request Structure {#sec-request-structure}
