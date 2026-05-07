@@ -18,12 +18,12 @@ keyword:
  - CRL
 
 venue:
-group: WG
-type: Working Group
-mail: WG@example.com
-arch: https://example.com/WG
-github: USER/REPO
-latest: https://example.com/LATEST
+  group: WG
+  type: Working Group
+  mail: WG@example.com
+  arch: https://example.com/WG
+  github: USER/REPO
+  latest: https://example.com/LATEST
 
 author:
 -
@@ -49,15 +49,13 @@ author:
  
 
 normative:
-RFC2119:
-RFC5280:
-RFC6960:
-RFC8174:
+  RFC2119:
+  RFC5280:
+  RFC6960:
+  RFC8174:
 
 informative:
-I-D.draft-harvey-cfrg-mtl-mode-02
-
-
+  I-D.draft-harvey-cfrg-mtl-mode-02
 
 --- abstract
 
