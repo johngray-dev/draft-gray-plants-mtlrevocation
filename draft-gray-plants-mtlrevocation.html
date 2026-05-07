@@ -4,16 +4,15 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>TODO - Your title</title>
-<meta content="Your Name Here" name="author">
+<title>MTL Revocation</title>
+<meta content="John Gray" name="author">
+<meta content="Joseph Harvey" name="author">
 <meta content="
-       TODO Abstract 
+       This document defines Merkle Tree Ladder Revocation which makes use of a Merkle Tree Ladder structure to compute and distribute revocation information more efficiently than existing revocation structures such as Certificate Revocation Lists (CRL) and Online Certificate Status Protocol (OCSP). 
     " name="description">
 <meta content="xml2rfc 3.33.0" name="generator">
-<meta content="next generation" name="keyword">
-<meta content="unicorn" name="keyword">
-<meta content="sparkling distributed ledger" name="keyword">
-<meta content="draft-todo-yourname-protocol-latest" name="ietf.draft">
+<meta content="Internet-Draft" name="keyword">
+<meta content="draft-gray-plants-mtlrevocation-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.33.0
     Python 3.12.13
@@ -28,7 +27,7 @@
     requests 2.33.1
     wcwidth 0.7.0
 -->
-<link href="draft-todo-yourname-protocol.xml" rel="alternate" type="application/rfc+xml">
+<link href="draft-gray-plants-mtlrevocation.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">@font-face {
   font-family: 'Lora';
@@ -1046,11 +1045,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
-<td class="center">TODO - Abbreviation</td>
+<td class="center">MTL Revocation</td>
 <td class="right">May 2026</td>
 </tr></thead>
 <tfoot><tr>
-<td class="left">Here</td>
+<td class="left">Gray &amp; Harvey</td>
 <td class="center">Expires 8 November 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
@@ -1059,30 +1058,34 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
-<dd class="workgroup">WG Working Group</dd>
+<dd class="workgroup">LAMPS</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-todo-yourname-protocol-latest</dd>
+<dd class="internet-draft">draft-gray-plants-mtlrevocation-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
 <time datetime="2026-05-07" class="published">7 May 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
-<dd class="intended-status">Informational</dd>
+<dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
 <dd class="expires"><time datetime="2026-11-08">8 November 2026</time></dd>
-<dt class="label-authors">Author:</dt>
+<dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
-      <div class="author-name">Y. N. Here</div>
-<div class="org">Your Organization Here</div>
+      <div class="author-name">J. Gray</div>
+<div class="org">Entrust</div>
+</div>
+<div class="author">
+      <div class="author-name">J. Harvey</div>
+<div class="org">Verisign</div>
 </div>
 </dd>
 </dl>
 </div>
-<h1 id="title">TODO - Your title</h1>
+<h1 id="title">MTL Revocation</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">TODO Abstract<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document defines Merkle Tree Ladder Revocation which makes use of a Merkle Tree Ladder structure to compute and distribute revocation information more efficiently than existing revocation structures such as Certificate Revocation Lists (CRL) and Online Certificate Status Protocol (OCSP).<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1091,7 +1094,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
 <p id="section-note.1-2">
         The latest revision of this draft can be found at <span><a href="https://example.com/LATEST">https://example.com/LATEST</a></span>.
-        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-todo-yourname-protocol/">https://datatracker.ietf.org/doc/draft-todo-yourname-protocol/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-gray-plants-mtlrevocation/">https://datatracker.ietf.org/doc/draft-gray-plants-mtlrevocation/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
 <p id="section-note.1-3">
         Discussion of this document takes place on the
         WG Working Group mailing list (<span><a href="mailto:WG@example.com">mailto:WG@example.com</a></span>),
@@ -1149,24 +1152,70 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <nav class="toc"><ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-terminology" class="internal xref">Terminology</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-revocation-request-structur" class="internal xref">Revocation Request Structure</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-merkle-tree-ladder-revocati" class="internal xref">Merkle Tree Ladder Revocation Structure</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1.2.1">
+                    <p id="section-toc.1-1.2.2.1.2.1.1" class="keepWithNext"><a href="#section-2.1.1" class="auto internal xref">2.1.1</a>.  <a href="#name-merkle-tree-ladder-generati" class="internal xref">Merkle Tree Ladder Generation Procedure</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1.2.2">
+                    <p id="section-toc.1-1.2.2.1.2.2.1"><a href="#section-2.1.2" class="auto internal xref">2.1.2</a>.  <a href="#name-validation-of-a-response" class="internal xref">Validation of a Response</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-asn1-structures" class="internal xref">ASN.1 Structures</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-mtl-common-use-cases" class="internal xref">MTL Common Use Cases</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-adding-new-certificate-stat" class="internal xref">Adding new Certificate status information to an existing Ladder</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-updating-status-information" class="internal xref">Updating status information for an existing certificate</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
+                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-full-mtl-signature-versus-p" class="internal xref">Full MTL Signature versus partial MTL signature (Generating a Complete MTL signature from a Partial signature)</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-mtl-and-real-time-responses" class="internal xref">MTL and Real Time Responses</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
+                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
+                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1177,72 +1226,289 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">TODO Introduction<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">When X.509 Certificate validation is performed, a revocation check operation is needed to ensure that the certificate being validated has not been revoked by its issuing CA.  Where CRL’s are used as the method of revocation, they can grow to be very large (10s of Megabytes), which is inefficient from a bandwidth perspective.   Partitioned CRL’s are better in that they reduce bandwidth, but require multiple signatures.   OCSP is another type of revocation that replaces a list of revocations with an individual OCSP response.  The issue with OCSP is that a signature is required for every response.    OCSP has the ability to enable real-time responses by use of a nonce, but in practice having a freshly signed response for every revocation request becomes too onerous for OCSP responders for very large CA systems.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">This proposal takes a different look at how revocation can be performed using the Merkle Tree Ladder (MTL) approach.   For revocation use-cases each leaf node in the Merkle Tree Ladder represents a signature over a certificate entry.   Efficiency is enabled because only a single signature over the set of ladders is required to validate any response in the MTL structure which can represent all revocation information for a CA.  The computation of each signature is effectivly replaced by a hash, and the MTL root signature can be cached offering minimal download overhead, especially in the context of larger cryptographic signatures schemes.  This can allow orders of magnatude faster compution of pre-computed revocation proofs which can lead to more timely revocation information.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">Dividing up work in different ways for optimal environment usage.  Eg.  Sigs turn to hashes, HSM may not need to sign as much.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<div id="sec-terminology">
+<section id="section-1.1">
+        <h3 id="name-terminology">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
+        </h3>
+<p id="section-1.1-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>", "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span>  <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">The following terms are used in this document:<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.1-3">PKI:
+Public Key Infrastructure, as defined in <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+<p id="section-1.1-4">SIGNATURE:
+A digital cryptographic signature, making no assumptions
+about which algorithm.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
+<p id="section-1.1-5">CRL:
+A Certificate Revocation List, as defined in <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span><a href="#section-1.1-5" class="pilcrow">¶</a></p>
+<p id="section-1.1-6">OCSP:
+Online Certificate status protocol, as defined in <span>[<a href="#RFC6960" class="cite xref">RFC6960</a>]</span><a href="#section-1.1-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="sec-request-structure">
+<section id="section-2">
+      <h2 id="name-revocation-request-structur">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-revocation-request-structur" class="section-name selfRef">Revocation Request Structure</a>
+      </h2>
+<p id="section-2-1">To request revocation information, at minimum information identifying the certificate whose status is being checked is required.  In a PKI system, a certificate can be uniquely identified by the issuer of the certificate along with its unique serial number.  According to [RFC5280] the serial number <span class="bcp14">MUST</span> be unique for each certificate issued by a given CA   This can be seen in OCSP [RFC6960] where the information used to identify a certificate in a request is a CertID:<a href="#section-2-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2-2">
+<pre>
+Request ::=     SEQUENCE {
+  reqCert                    CertID,
+  singleRequestExtensions    \[0] EXPLICIT Extensions OPTIONAL }
+
+CertID ::= SEQUENCE {
+   hashAlgorithm      AlgorithmIdentifier,
+   issuerNameHash     OCTET STRING, -- Hash of Issuer's DN
+   issuerKeyHash      OCTET STRING, -- Hash of Issuers public key
+   serialNumber       CertificateSerialNumber }
+</pre><a href="#section-2-2" class="pilcrow">¶</a>
+</div>
+<p id="section-2-3">For CRL's, the revocation information for a Certificate is usually contained in a Certificate Revocation list Distribution point extension (CRLDP) which identifies the location of the CRL.  The CRL can contain revocation information for all certificates in the PKI, or a subset of certificates in the PKI.<a href="#section-2-3" class="pilcrow">¶</a></p>
+<div id="merkle-tree-ladder-revocation-structure">
+<section id="section-2.1">
+        <h3 id="name-merkle-tree-ladder-revocati">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-merkle-tree-ladder-revocati" class="section-name selfRef">Merkle Tree Ladder Revocation Structure</a>
+        </h3>
+<p id="section-2.1-1">A Merkle Tree Ladder optimized for use for Revocation gives the best properties from both the OCSP approach and CRL approach.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.1-2.1">
+            <p id="section-2.1-2.1.1">Each leaf node in a MTL structure can represent the hash over the certificate status information.<a href="#section-2.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<div id="sec-generation">
+<section id="section-2.1.1">
+          <h4 id="name-merkle-tree-ladder-generati">
+<a href="#section-2.1.1" class="section-number selfRef">2.1.1. </a><a href="#name-merkle-tree-ladder-generati" class="section-name selfRef">Merkle Tree Ladder Generation Procedure</a>
+          </h4>
+<ol start="1" type="1" class="normal type-1" id="section-2.1.1-1">
+<li id="section-2.1.1-1.1">
+              <p id="section-2.1.1-1.1.1">For each certificate:
+Compute the Status Information (TBD some DER encoded structure, could be the OCSP response structure for example)
+Hash the DER encoded structure
+Add hash to the growing MTL structure<a href="#section-2.1.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-2.1.1-1.2">
+              <p id="section-2.1.1-1.2.1">Generate the signature on the Ladder - Section section on suggested algorithms<a href="#section-2.1.1-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-2.1.1-1.3">
+              <p id="section-2.1.1-1.3.1">For each certificate response:
+a. Generate an MTL Condensed Signature (authentication path and handle reference value)
+b. Include the condensed signature in the certificate response
+c. Map the certificate identifier information to the included response information<a href="#section-2.1.1-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          </ol>
+<p id="section-2.1.1-2">Note:  Implementations will need to associate the Certificate Identifier information with the certificate response object so that when request information is received, the response information for that associated responsed can be located.<a href="#section-2.1.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="validation-of-a-response">
+<section id="section-2.1.2">
+          <h4 id="name-validation-of-a-response">
+<a href="#section-2.1.2" class="section-number selfRef">2.1.2. </a><a href="#name-validation-of-a-response" class="section-name selfRef">Validation of a Response</a>
+          </h4>
+<ul class="normal">
+<li class="normal" id="section-2.1.2-1.1">
+              <p id="section-2.1.2-1.1.1">A certificate extension (for example AIA id-ad-ocsp, or new defined AIA extension) is used to convey how a client using the certificate's revocation information can check the MTL signature<a href="#section-2.1.2-1.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.1.2-1.1.2.1">
+                  <p id="section-2.1.2-1.1.2.1.1">TODO probably a new extension will be needed, the client would need to retreive at least the MTL condensed signature, and possibly the ladder signature if it didn't already have it.   Clients can cache the ladder signature for future use, or could periodically poll to download the latest ladder signature.<a href="#section-2.1.2-1.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              </ul>
+</li>
+            <li class="normal" id="section-2.1.2-1.2">
+              <p id="section-2.1.2-1.2.1">Using a Condensed signature would reduce size increase of comparable OCSP responses.   Even with the occasional update of the MTL ladder signature, sizes would we much smaller than combined CRL's.<a href="#section-2.1.2-1.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-2.1.2-1.3">
+              <p id="section-2.1.2-1.3.1">Client will reconstitute the full MTL signature (authentication path, handle reference value and signature) and verify it.<a href="#section-2.1.2-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="asn1-structures">
+<section id="section-3">
+      <h2 id="name-asn1-structures">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-asn1-structures" class="section-name selfRef">ASN.1 Structures</a>
+      </h2>
+<p id="section-3-1">TODO - This section will describe the required ASN.1 structures<a href="#section-3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="mtl-common-use-cases">
+<section id="section-4">
+      <h2 id="name-mtl-common-use-cases">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-mtl-common-use-cases" class="section-name selfRef">MTL Common Use Cases</a>
+      </h2>
+<p id="section-4-1">TODO<a href="#section-4-1" class="pilcrow">¶</a></p>
+<div id="adding-new-certificate-status-information-to-an-existing-ladder">
+<section id="section-4.1">
+        <h3 id="name-adding-new-certificate-stat">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-adding-new-certificate-stat" class="section-name selfRef">Adding new Certificate status information to an existing Ladder</a>
+        </h3>
+<p id="section-4.1-1">After the initial computation of the MTL structure that represents all the revocation information for all the certificates in a PKI system, additional revocation responses will need to be added as new certificates are generated or revoked in the PKI.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.1-2">When a new certificate is created, the hash of the certificate status information can be added to the Merkle Tree Ladder as specified in <a href="#sec-generation" class="auto internal xref">Section 2.1.1</a> for that particular certificate.  However, it should be noted that the signature over the root node that covers all revocation information will need to be recomputed.  This procedure will not invalidate any exisitng revocation response information, but it will require that the new root signature be downloaded and cached for any client that requests revocation information for this newly added or updated certificate status.  If this process is continued on a certificate by certificate basis, then the efficiency of using this MTL structure is reduces.  Therefore, the following can be used to mitigate the decrease in efficiency over time:<a href="#section-4.1-2" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.1-3">
+<li id="section-4.1-3.1">
+            <p id="section-4.1-3.1.1">Certificate status information can be published in batched time periods to increase the efficiency.  This would have the effect of revocation information not becoming immediatly available at the cost of efficiency.   For example, if the batch period was 10 minutes, and the PKI issued 5 new certifiates and 1 revocation in that time period, the MTL structure could be updated at 10 minutes to include all 6 new certificate status information.  If no new certificate status information is created in the batch period, the MTL structure would not need to be updated.<a href="#section-4.1-3.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-4.1-3.2">
+            <p id="section-4.1-3.2.1">PKI systems may have times where many certificates are issued or revoked at once.  It would be possible to set both a batching time period as well as a status information upper bound to trigger an update to the Merkle tree.  For example, if the batch period was 10 minutes, and the status information update was set to 100, and the PKI issued 97 new certifcates and revoked 3 in a span of 7 minutes, the Merkle Tree ladder could be triggered to add the 100 new revocations immediately and restart the timer.  This would have the effect of giving more timely response information when a PKI has heavier load, and would spread out the computation required over time.<a href="#section-4.1-3.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-4.1-3.3">
+            <p id="section-4.1-3.3.1">It may be desirable to periodically re-calculate the entire MTL structure to clean up status information that has been updated and is no longer valid.<a href="#section-4.1-3.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-4.1-3.4">
+            <p id="section-4.1-3.4.1">The MTL structure will need to take into account the validity period of each response.<a href="#section-4.1-3.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
+</section>
+</div>
+<div id="updating-status-information-for-an-existing-certificate">
+<section id="section-4.2">
+        <h3 id="name-updating-status-information">
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-updating-status-information" class="section-name selfRef">Updating status information for an existing certificate</a>
+        </h3>
+<p id="section-4.2-1">When the revocation status information for an existing certificate already contained in the MTL structure changes, the MTL structure simply adds a new entry as defined in <a href="#sec-generation" class="auto internal xref">Section 2.1.1</a>.  This has the effect of invalidating the existing status for that certificate which is already contained in the MTL structure.  The information at the MTL Revocation server's side which maps the certificate identifier information to that revocation in the MTL structure <span class="bcp14">MUST</span> be updated so that a client requesting certificate status information gets access to the most relevent revocation information.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="full-mtl-signature-versus-partial-mtl-signature-generating-a-complete-mtl-signature-from-a-partial-signature">
+<section id="section-4.3">
+        <h3 id="name-full-mtl-signature-versus-p">
+<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-full-mtl-signature-versus-p" class="section-name selfRef">Full MTL Signature versus partial MTL signature (Generating a Complete MTL signature from a Partial signature)</a>
+        </h3>
+<p id="section-4.3-1">A full MTL signature consists of the authentication path from the message to the ladder as well as the ladder, and the underlying signature on the ladder.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.3-2">A partial MTL signature consists of only the authentication path from the message to the ladder as well as the ladder.<a href="#section-4.3-2" class="pilcrow">¶</a></p>
+<p id="section-4.3-3">When a client requests certificate status information for a certificate, it needs the following pieces of information<a href="#section-4.3-3" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.3-4">
+<li id="section-4.3-4.1">
+            <p id="section-4.3-4.1.1">The Certificate identifier (CertID) of the certificate it is requesting as specified in <a href="#sec-request-structure" class="auto internal xref">Section 2</a><a href="#section-4.3-4.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-4.3-4.2">
+            <p id="section-4.3-4.2.1">A HASH of its most recently cached MTL signature on the ladder or Null if it does not have one.
+TODO:  Does this requirement make the client too stateful?   If the client always has to request the full path, then no efficiency is gained at the client side.<a href="#section-4.3-4.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
+<p id="section-4.3-5">The MTL Revocation server can use this information to determine whether a full MTL signature is required to be sent, or if the client has enough information to construct a full MTL signature from the most recent cached MTL signature.<a href="#section-4.3-5" class="pilcrow">¶</a></p>
+<p id="section-4.3-6">EDNOTE:  Does regular cache of CRL's OCSP give just as much an efficiency gain?   It would be expected that a client would use regular caching (if they have already received a responce for the specified certificate and its validity period is still valid).  If the validity period has expired, then a new certificate status is needed, and the updated full chain is needed.   Efficiency is only gained at the client when it needs to check revocation of many certificates from the same PKI infrastructure.<a href="#section-4.3-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="mtl-and-real-time-responses">
+<section id="section-5">
+      <h2 id="name-mtl-and-real-time-responses">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-mtl-and-real-time-responses" class="section-name selfRef">MTL and Real Time Responses</a>
+      </h2>
+<p id="section-5-1">TODO<a href="#section-5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">
-<section id="section-2">
+<section id="section-6">
       <h2 id="name-conventions-and-definitions">
-<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
       </h2>
-<p id="section-2-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+<p id="section-6-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
-appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+appear in all capitals, as shown here.<a href="#section-6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-considerations">
-<section id="section-3">
+<section id="section-7">
       <h2 id="name-security-considerations">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-3-1">TODO Security<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-7-1">TODO Security<a href="#section-7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
-<section id="section-4">
+<section id="section-8">
       <h2 id="name-iana-considerations">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-4-1">This document has no IANA actions.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-8-1">This document has no IANA actions.<a href="#section-8-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="sec-normative-references">
-<section id="section-5">
-      <h2 id="name-normative-references">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<div id="sec-combined-references">
+<section id="section-9">
+      <h2 id="name-references">
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
+<section id="section-9.1">
+        <h3 id="name-normative-references">
+<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
 <dl class="references">
 <dt id="RFC2119">[RFC2119]</dt>
-      <dd>
-<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
+        <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5280">[RFC5280]</dt>
+        <dd>
+<span class="refAuthor">Cooper, D.</span>, <span class="refAuthor">Santesson, S.</span>, <span class="refAuthor">Farrell, S.</span>, <span class="refAuthor">Boeyen, S.</span>, <span class="refAuthor">Housley, R.</span>, and <span class="refAuthor">W. Polk</span>, <span class="refTitle">"Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile"</span>, <span class="seriesInfo">RFC 5280</span>, <span class="seriesInfo">DOI 10.17487/RFC5280</span>, <time datetime="2008-05" class="refDate">May 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc5280">https://www.rfc-editor.org/info/rfc5280</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6960">[RFC6960]</dt>
+        <dd>
+<span class="refAuthor">Santesson, S.</span>, <span class="refAuthor">Myers, M.</span>, <span class="refAuthor">Ankney, R.</span>, <span class="refAuthor">Malpani, A.</span>, <span class="refAuthor">Galperin, S.</span>, and <span class="refAuthor">C. Adams</span>, <span class="refTitle">"X.509 Internet Public Key Infrastructure Online Certificate Status Protocol - OCSP"</span>, <span class="seriesInfo">RFC 6960</span>, <span class="seriesInfo">DOI 10.17487/RFC6960</span>, <time datetime="2013-06" class="refDate">June 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6960">https://www.rfc-editor.org/info/rfc6960</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-    <dd>
-<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+      <dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
 </div>
-<div id="acknowledgments">
-<section id="appendix-A">
-      <h2 id="name-acknowledgments">
-<a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
-      </h2>
-<p id="appendix-A-1">TODO acknowledge.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<div id="sec-informative-references">
+<section id="section-9.2">
+        <h3 id="name-informative-references">
+<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="I-D.harvey-cfrg-mtl-mode">[I-D.harvey-cfrg-mtl-mode]</dt>
+      <dd>
+<span class="refAuthor">Harvey, J.</span>, <span class="refAuthor">Kaliski, B.</span>, <span class="refAuthor">Fregly, A.</span>, and <span class="refAuthor">S. Sheth</span>, <span class="refTitle">"Merkle Tree Ladder Mode (MTL) Signatures"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-harvey-cfrg-mtl-mode-02</span>, <time datetime="2023-12-12" class="refDate">12 December 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-harvey-cfrg-mtl-mode-02">https://datatracker.ietf.org/doc/html/draft-harvey-cfrg-mtl-mode-02</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
 </section>
 </div>
 <div id="authors-addresses">
-<section id="appendix-B">
-      <h2 id="name-authors-address">
-<a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
+<section id="appendix-A">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">Your Name Here</span></div>
-<div dir="auto" class="left"><span class="org">Your Organization Here</span></div>
+        <div dir="auto" class="left"><span class="fn nameRole">John Gray</span></div>
+<div dir="auto" class="left"><span class="org">Entrust Limited</span></div>
+<div dir="auto" class="left"><span class="street-address">2500 Solandt Road – Suite 100</span></div>
+<div dir="auto" class="left">
+<span class="locality">Ottawa, Ontario</span>  <span class="postal-code">K2K 3G5</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">Canada</span></div>
 <div class="email">
 <span>Email:</span>
-<a href="mailto:your.email@example.com" class="email">your.email@example.com</a>
+<a href="mailto:john.gray@entrust.com" class="email">john.gray@entrust.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Joseph Harvey</span></div>
+<div dir="auto" class="left"><span class="org">Verisign Labs</span></div>
+<div dir="auto" class="left"><span class="street-address">12061 Bluemont Way</span></div>
+<div dir="auto" class="left">
+<span class="locality">Reston, VA</span>,  <span class="postal-code">20190</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">United States of America</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:jsharvey@verisign.com" class="email">jsharvey@verisign.com</a>
 </div>
 </address>
 </section>
