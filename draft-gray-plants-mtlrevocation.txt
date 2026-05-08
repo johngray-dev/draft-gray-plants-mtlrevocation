@@ -2,11 +2,11 @@
 
 
 
-LAMPS                                                            J. Gray
+PLANTS                                                           J. Gray
 Internet-Draft                                                   Entrust
 Intended status: Standards Track                               J. Harvey
-Expires: 8 November 2026                                        Verisign
-                                                              7 May 2026
+Expires: 9 November 2026                                        Verisign
+                                                              8 May 2026
 
 
                              MTL Revocation
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 November 2026.
+   This Internet-Draft will expire on 9 November 2026.
 
 Copyright Notice
 
