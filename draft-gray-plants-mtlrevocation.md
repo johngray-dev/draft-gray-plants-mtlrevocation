@@ -6,7 +6,7 @@ category: std
 docname: draft-gray-plants-mtlrevocation-latest
 ipr: trust200902
 area: "Security"
-wg: LAMPS
+wg: PLANTS
 kw: Internet-Draft
 
 keyword:
