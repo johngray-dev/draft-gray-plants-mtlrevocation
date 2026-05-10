@@ -1,0 +1,83 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2026-05-10T03:35:25.311766+00:00",
+  "repo": "johngray-dev/draft-gray-plants-mtlrevocation",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOSXLh5s7ZSPrr",
+      "title": "Jg fix compile errors",
+      "url": "https://github.com/johngray-dev/draft-gray-plants-mtlrevocation/pull/1",
+      "state": "MERGED",
+      "author": "johngray-dev",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-05-07T19:45:40Z",
+      "updatedAt": "2026-05-07T19:46:24Z",
+      "baseRepository": "johngray-dev/draft-gray-plants-mtlrevocation",
+      "baseRefName": "main",
+      "baseRefOid": "1292bb29cadae095f0ee263a9464541b9037fefa",
+      "headRepository": "johngray-dev/draft-gray-plants-mtlrevocation",
+      "headRefName": "jg_fixCompileErrors",
+      "headRefOid": "e15a4974266658e51d50a7ccd4fc26263ebe1412",
+      "closedAt": "2026-05-07T19:46:24Z",
+      "mergedAt": "2026-05-07T19:46:24Z",
+      "mergedBy": "johngray-dev",
+      "mergeCommit": {
+        "oid": "214914d38e3d9d3afafe0f459cdd405f4362d7e1"
+      },
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}
